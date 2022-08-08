@@ -37,6 +37,6 @@ class AdType(str, Enum):
     
 class Ad_Request(BaseModel):
     min_cpc: float
+    type : AdType
     user_info: Optional[UserInfo] = None
     categories: Optional[Categories] = None
-    type : AdType

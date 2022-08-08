@@ -4,7 +4,8 @@ from models.ssp import  Ad_Request
 
 from repositries import ssp as repo_ssp
 
-
+from fastapi.responses import JSONResponse 
+from pydantic import BaseModel
 
 ssp_router = APIRouter(
     prefix="/ssp",
@@ -12,6 +13,8 @@ ssp_router = APIRouter(
 )
 
 
+class Test(BaseModel):
+    msg : str
 
 
 @ssp_router.post('/request')
