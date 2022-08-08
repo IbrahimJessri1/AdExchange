@@ -9,7 +9,9 @@ class DSP(BaseModel):
     username: str
     password: str
     nego_api : str
+    interactive_nogo_api: str
     request_api : str
+    interactive_request_api:str
 
 
 

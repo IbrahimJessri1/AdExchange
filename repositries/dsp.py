@@ -1,5 +1,5 @@
 
-from config.db import conn
+from config.db import dsp_collection
 from . import generics as gen
 from fastapi import HTTPException, status
 from models.user import DSPShow
@@ -8,7 +8,7 @@ import datetime
 
 def add_dsp(dspInput):
     try:
-        collection = conn.AdExchange.user
+        collection = dsp_collection
         dsp = gen.get_one(collection, {"username" : dspInput.username})
         if dsp:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="username is taken!")
