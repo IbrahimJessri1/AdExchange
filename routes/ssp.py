@@ -21,3 +21,8 @@ class Test(BaseModel):
 async def request_ad(ad_request : Ad_Request):
     return await repo_ssp.request_ad(ad_request)
 
+
+@ssp_router.post('/request_interactive')
+async def request_ad(ad_request : Ad_Request):
+    return await repo_ssp.request_ad(ad_request, 1)
+

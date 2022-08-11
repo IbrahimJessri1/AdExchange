@@ -40,3 +40,4 @@ class Ad_Request(BaseModel):
     type : AdType
     user_info: Optional[UserInfo] = None
     categories: Optional[Categories] = None
+    keywords: Optional[List[str]] = None
