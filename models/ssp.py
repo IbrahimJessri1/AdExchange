@@ -23,10 +23,34 @@ class UserInfo(BaseModel):
 
     
 class Category(str, Enum):
-    TECHNOLOGY= "technology"
+    ANY= "any"
+    PLACES= "places"
+    Technology= "technology"
+    HEALTHCARE = "healthcare"
+    APPS= "apps"
+    TOYS=  "toys"
+    GAMING= "gaming"
+    EDUCATION = "education"
+    VEHICLES= "vehicles"
+    NATURE= "nature"
+    FOOD= "food"
+    SMARTPHONES= "smartphones"
+    CARS= "cars"
+    PRODUCTS= "products"
+    WEBSITES= "websites"
+    BIKES= "bikes"
+    SCHOOL= "school"
+    BOOKS= "books"
+    ELECTRONICS= "electronics"
+    HOUSE= "house"
+    FURNITURE= "furniture"
+    FAMILY= "family"
+    CLOTHES= "clothes"
+    WEARBLE= "wearable"
+    ANIMALS= "animals"
+    MEDIA= "media"
+    JOBS= "jobs"
 
-class Categories(BaseModel):
-    categories_list: Optional[List[Category]] = None
 
 
 class AdType(str, Enum):
@@ -38,6 +62,6 @@ class AdType(str, Enum):
 class Ad_Request(BaseModel):
     min_cpc: float
     type : AdType
-    user_info: Optional[UserInfo] = None
-    categories: Optional[Categories] = None
-    keywords: Optional[List[str]] = None
+    user_info: Optional[UserInfo] = {}
+    categories: Optional[List[Category]] = []
+    keywords: Optional[List[str]] = []

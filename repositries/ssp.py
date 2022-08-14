@@ -1,9 +1,10 @@
 
-from http.client import HTTPException
+from fastapi import HTTPException
 from models.ssp import Ad_Request
 from config.db import dsp_collection
 from repositries import generics as gen
 import requests
+from requests.structures import CaseInsensitiveDict
 from repositries.utilites import get_dict
 from fastapi import status
 
@@ -15,7 +16,7 @@ class Test(BaseModel):
 
 async def request_ad(request: Ad_Request, interactive = 0):
     
-    bid_times = 10
+    bid_times = 100
 
     all_dsp = gen.get_many(dsp_collection, {})
     current_cpc = request.min_cpc
@@ -33,7 +34,12 @@ async def request_ad(request: Ad_Request, interactive = 0):
             
             dsp = all_dsp[j]
             data["min_cpc"] = current_cpc
-            res = requests.post(url=dsp[nego_api], json=data)
+            headers = CaseInsensitiveDict()
+            headers["Content-Type"] = 'application/json'
+            try:
+                res = requests.post(url=dsp[nego_api], json=data, headers= headers)
+            except:
+                continue
             if res.status_code != status.HTTP_200_OK:
                 continue
             res = res.json()
