@@ -13,3 +13,9 @@ dsp_router = APIRouter(
 @dsp_router.post('/', status_code=status.HTTP_201_CREATED)
 async def add_dsp(dsp: DSP):
     return repo_dsp.add_dsp(dsp)
+
+
+
+@dsp_router.get('/')
+async def get_all_dsp():
+    return repo_dsp.get_all_dsp()

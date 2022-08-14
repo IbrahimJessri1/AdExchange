@@ -12,5 +12,5 @@ user_router = APIRouter(
 
 @user_router.get('/all')
 async def get(current_username : TokenData = Depends(oauth2.get_current_user)):
-    #Authorize.auth("get_user", current_username.username)
+    Authorize.auth("get_user", current_username.username)
     return repo_user.get_all()

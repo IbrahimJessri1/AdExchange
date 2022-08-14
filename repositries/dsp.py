@@ -1,4 +1,5 @@
 
+from venv import create
 from config.db import dsp_collection
 from . import generics as gen
 from fastapi import HTTPException, status
@@ -23,3 +24,28 @@ def add_dsp(dspInput):
         raise http_excep    
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An Error Happaned, try again later") 
+
+
+def get_all_dsp():
+    dsps = gen.get_many(dsp_collection, {})
+    return toDSPShowList(dsps)
+
+
+
+
+
+def toDSPShow(item):
+    return DSPShow(
+        username=item["username"],
+        nego_api=item["nego_api"],
+        interactive_nego_api=item["interactive_nego_api"],
+        request_api=item["request_api"],
+        interactive_request_api=item["interactive_request_api"],
+        create_date=item["create_date"]
+    )
+
+def toDSPShowList(itemList):
+    res = []
+    for item in itemList:
+        res.append(toDSPShow(item))
+    return res
