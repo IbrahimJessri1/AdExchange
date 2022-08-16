@@ -1,4 +1,4 @@
-from models.user import DSP
+from models.user import DSP, DSPUpdate
 from models.ssp import Ad_Request
 import requests, validators
 MAX_KEYWORDS = 20
@@ -19,6 +19,45 @@ class Validator:
             msg.append("request_api is not valid")
         if not Validator.validate_url(dsp.interactive_request_api):
             msg.append("interactive_request_api is not valid")
+        if not Validator.validate_url(dsp.html_request_api):
+            msg.append("html_request_api is not valid")
+        if not Validator.validate_url(dsp.html_interactive_request_api):
+            msg.append("html_interactive_request_api is not valid")
+        if msg:
+            return msg
+        return False
+
+    def validate_dsp_update(dsp_update : DSPUpdate):
+        msg = []
+        if dsp_update.password:
+            if len(dsp_update.password) < 8:
+                msg.append("password must have at least 8 characters")
+        if dsp_update.nego_api:
+            if not Validator.validate_url(dsp_update.nego_api):
+                msg.append("nego_api is not valid")
+        if dsp_update.interactive_nego_api:
+            if not Validator.validate_url(dsp_update.interactive_nego_api):
+                msg.append("interactive_nego_api is not valid")
+        if dsp_update.request_api:
+            if not Validator.validate_url(dsp_update.request_api):
+                msg.append("request_api is not valid")
+        if dsp_update.interactive_request_api:
+            if not Validator.validate_url(dsp_update.interactive_request_api):
+                msg.append("interactive_request_api is not valid")
+        if dsp_update.html_request_api:
+            if not Validator.validate_url(dsp_update.html_request_api):
+                msg.append("html_request_api is not valid")
+        if dsp_update.html_interactive_request_api:
+            if not Validator.validate_url(dsp_update.html_interactive_request_api):
+                msg.append("html_interactive_request_api is not valid")
+        if msg:
+            return msg
+        return False
+
+    def validate_user_update(user_update : DSPUpdate):
+        msg = []
+        if len(user_update.password) < 8:
+            msg.append("password must have at least 8 characters")
         if msg:
             return msg
         return False
@@ -34,6 +73,8 @@ class Validator:
                 ad_request.keywords = list(set(ad_request.keywords))
                 if len(ad_request.keywords) > MAX_KEYWORDS:
                     msg.append("too many keywords")
+            if len(ad_request.payment_account) == 0:
+                msg.append("payment_account needs not to be empty")
             if msg:
                 return msg
             return False

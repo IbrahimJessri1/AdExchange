@@ -1,6 +1,6 @@
 
 from fastapi import HTTPException
-from models.ssp import Ad_Request
+from models.ssp import Ad_Request, ResponseType
 from config.db import dsp_collection
 from repositries import generics as gen
 import requests
@@ -23,10 +23,13 @@ async def request_ad(request: Ad_Request, interactive = 0):
     bid_cpc = request.min_cpc
     winner_dsp_info = [-1, -1]
     data = get_dict(request)
+    del data['response_type']
+    del data['payment_account']
     old_winner = -1
+    bad = []
     for _ in range(bid_times):
         for j in range(len(all_dsp)):
-            if j == winner_dsp_info[0]:
+            if j == winner_dsp_info[0] or j in bad:
                 continue
             nego_api = "nego_api"
             if interactive != 0:
@@ -37,8 +40,9 @@ async def request_ad(request: Ad_Request, interactive = 0):
             headers = CaseInsensitiveDict()
             headers["Content-Type"] = 'application/json'
             try:
-                res = requests.post(url=dsp[nego_api], json=data, headers= headers)
+                res = requests.post(url=dsp[nego_api], json=data, headers= headers,timeout=0.5)
             except:
+                bad.append(j)
                 continue
             if res.status_code != status.HTTP_200_OK:
                 continue
@@ -58,10 +62,19 @@ async def request_ad(request: Ad_Request, interactive = 0):
     ad_id = winner_dsp_info[1]
     data = {
         "cpc": current_cpc,
-        "ad_id":ad_id
+        "ad_id":ad_id,
+        "payment_account": request.payment_account
     }
     request_api = "request_api"
     if interactive != 0:
         request_api = "interactive_request_api"
-    response = requests.post(url= winner_dsp[request_api], json=data)
+    if request.response_type == ResponseType.HTML:
+        request_api = 'html_' + request_api
+    
+    try:
+        response = requests.post(url= winner_dsp[request_api], json=data)
+    except:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="No Ads For U")
+    if request.response_type == ResponseType.HTML:
+        return response.content
     return response.json()

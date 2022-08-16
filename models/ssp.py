@@ -58,6 +58,9 @@ class AdType(str, Enum):
     IMAGE= "image"
     VIDEO= "video"
 
+class ResponseType(str, Enum):
+    JSON= "json"
+    HTML= "html"
     
 class Ad_Request(BaseModel):
     min_cpc: float
@@ -65,3 +68,5 @@ class Ad_Request(BaseModel):
     user_info: Optional[UserInfo] = {}
     categories: Optional[List[Category]] = []
     keywords: Optional[List[str]] = []
+    response_type: ResponseType
+    payment_account: str

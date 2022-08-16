@@ -3,7 +3,7 @@
 from config.db import role_permission_collection
 from repositries import generics as gen
 
-admin_permission = ["get_user"]
+admin_permission = ["get_user", "self_update_user", "self_get_user"]
 
 #collection.insert_one(
 {
@@ -13,17 +13,18 @@ admin_permission = ["get_user"]
 #)
 
 
-dsp_permission = []
+dsp_permission = ["self_update_account_dsp", "self_get_dsp"]
 
-#collection.insert_one(
-{
-    "role" : "advertiser",
-    "permissions" :dsp_permission
-}
+# role_permission_collection.insert_one(
+# {
+#     "role" : "dsp",
+#     "permissions" :dsp_permission
+# }
+# )
 
 
-# gen.update_one(role_permission_collection, {"role" : "advertiser"}, {"$set" : {"permissions" : advertiser_permission}})
-# gen.update_one(role_permission_collection, {"role" : "admin"}, {"$set" : {"permissions" : admin_permission}})
+gen.update_one(role_permission_collection, {"role" : "dsp"}, {"$set" : {"permissions" : dsp_permission}})
+gen.update_one(role_permission_collection, {"role" : "admin"}, {"$set" : {"permissions" : admin_permission}})
 
 
 #)
