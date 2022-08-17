@@ -70,3 +70,5 @@ class Ad_Request(BaseModel):
     keywords: Optional[List[str]] = []
     response_type: ResponseType
     payment_account: str
+    max_width: Optional[int] = 0
+    max_height: Optional[int] = 0

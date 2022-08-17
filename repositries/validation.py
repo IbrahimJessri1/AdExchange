@@ -74,7 +74,16 @@ class Validator:
                 if len(ad_request.keywords) > MAX_KEYWORDS:
                     msg.append("too many keywords")
             if len(ad_request.payment_account) == 0:
-                msg.append("payment_account needs not to be empty")
+                msg.append("payment_account must not be empty")
+                
+            if ad_request.max_width != 0:
+                if ad_request.max_width < 5:
+                    msg.append("width must be greater than 5px")
+
+            if ad_request.max_height != 0:
+                if ad_request.max_height < 5:
+                    msg.append("height must be greater than 5px")
+            
             if msg:
                 return msg
             return False

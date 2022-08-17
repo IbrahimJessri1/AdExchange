@@ -25,6 +25,9 @@ async def request_ad(request: Ad_Request, interactive = 0):
     data = get_dict(request)
     del data['response_type']
     del data['payment_account']
+    data.pop("max_width", None)
+    data.pop("max_height", None)
+
     old_winner = -1
     bad = []
     for _ in range(bid_times):
@@ -65,6 +68,10 @@ async def request_ad(request: Ad_Request, interactive = 0):
         "ad_id":ad_id,
         "payment_account": request.payment_account
     }
+
+    data["max_width"] = request.max_width
+    data["max_height"] = request.max_height
+    print(data)
     request_api = "request_api"
     if interactive != 0:
         request_api = "interactive_request_api"
