@@ -10,7 +10,7 @@ from fastapi import status
 
 from pydantic import BaseModel
 class Test(BaseModel):
-    att: str
+    att: strdsdfa
 
 
 
