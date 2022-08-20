@@ -27,7 +27,6 @@ async def request_ad(request: Ad_Request, interactive = 0):
     del data['payment_account']
     data.pop("max_width", None)
     data.pop("max_height", None)
-
     old_winner = -1
     bad = []
     for _ in range(bid_times):

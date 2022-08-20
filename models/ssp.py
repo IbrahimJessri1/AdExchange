@@ -62,6 +62,12 @@ class ResponseType(str, Enum):
     JSON= "json"
     HTML= "html"
     
+class Shape(str, Enum):
+    HORIZONTAL= "horizontal"
+    VERTICAL= "vertical"
+    RECTANGULAR= "rectangular"
+
+
 class Ad_Request(BaseModel):
     min_cpc: float
     type : AdType
@@ -72,3 +78,4 @@ class Ad_Request(BaseModel):
     payment_account: str
     max_width: Optional[int] = 0
     max_height: Optional[int] = 0
+    shape: Shape
