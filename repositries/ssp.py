@@ -7,6 +7,10 @@ import requests
 from requests.structures import CaseInsensitiveDict
 from repositries.utilites import get_dict
 from fastapi import status
+from fastapi.responses import FileResponse
+
+
+
 
 from pydantic import BaseModel
 class Test(BaseModel):
@@ -84,3 +88,7 @@ async def request_ad(request: Ad_Request, interactive = 0):
     if request.response_type == ResponseType.HTML:
         return response.content
     return response.json()
+
+
+def autoserve_request():
+    return FileResponse('static/request.js', media_type='text/js')
