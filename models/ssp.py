@@ -54,9 +54,9 @@ class Category(str, Enum):
 
 
 class AdType(str, Enum):
-    TEXT= "text"
     IMAGE= "image"
     VIDEO= "video"
+    GIF= "gif"
 
 class ResponseType(str, Enum):
     JSON= "json"

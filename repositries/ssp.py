@@ -32,7 +32,7 @@ async def request_ad(request: Ad_Request, interactive = 0):
     data.pop("max_width", None)
     data.pop("max_height", None)
     old_winner = -1
-    bad = []
+    bad = [1,2]
     for _ in range(bid_times):
         for j in range(len(all_dsp)):
             if j == winner_dsp_info[0] or j in bad:
