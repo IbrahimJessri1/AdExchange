@@ -1,5 +1,4 @@
 
-from sqlite3 import OperationalError
 from typing import Optional
 from pydantic import BaseModel
 

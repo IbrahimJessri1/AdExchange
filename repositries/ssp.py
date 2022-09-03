@@ -11,17 +11,15 @@ from fastapi.responses import FileResponse
 
 
 
-
 from pydantic import BaseModel
 class Test(BaseModel):
     att: str
 
 
 
-async def request_ad(request: Ad_Request, interactive = 0):
+def request_ad(request: Ad_Request, interactive = 0):
     
-    bid_times = 100
-
+    bid_times = 10
     all_dsp = gen.get_many(dsp_collection, {})
     current_cpc = request.min_cpc
     bid_cpc = request.min_cpc
@@ -32,7 +30,7 @@ async def request_ad(request: Ad_Request, interactive = 0):
     data.pop("max_width", None)
     data.pop("max_height", None)
     old_winner = -1
-    bad = [1,2]
+    bad = []
     for _ in range(bid_times):
         for j in range(len(all_dsp)):
             if j == winner_dsp_info[0] or j in bad:
@@ -46,11 +44,12 @@ async def request_ad(request: Ad_Request, interactive = 0):
             headers = CaseInsensitiveDict()
             headers["Content-Type"] = 'application/json'
             try:
-                res = requests.post(url=dsp[nego_api], json=data, headers= headers,timeout=0.5)
+                res = requests.post(url=dsp[nego_api], json=data, headers= headers)
             except:
                 bad.append(j)
                 continue
             if res.status_code != status.HTTP_200_OK:
+                bad.append(j)
                 continue
             res = res.json()
             if res["cpc"] > bid_cpc:
@@ -60,9 +59,10 @@ async def request_ad(request: Ad_Request, interactive = 0):
         if old_winner == winner_dsp_info[0]:
             break
         old_winner = winner_dsp_info[0]
+        
 
     if winner_dsp_info[0] == -1:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "No Ads For U")
+        raise HTTPException(status_code=status.HTTP_412_PRECONDITION_FAILED, detail= "No Ads For U")
 
     winner_dsp = all_dsp[winner_dsp_info[0]]
     ad_id = winner_dsp_info[1]
@@ -74,7 +74,6 @@ async def request_ad(request: Ad_Request, interactive = 0):
 
     data["max_width"] = request.max_width
     data["max_height"] = request.max_height
-    print(data)
     request_api = "request_api"
     if interactive != 0:
         request_api = "interactive_request_api"

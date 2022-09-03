@@ -33,7 +33,7 @@ class Category(str, Enum):
     EDUCATION = "education"
     VEHICLES= "vehicles"
     NATURE= "nature"
-    FOOD= "food"
+    FOذOD= "food"
     SMARTPHONES= "smartphones"
     CARS= "cars"
     PRODUCTS= "products"

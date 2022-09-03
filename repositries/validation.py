@@ -1,6 +1,6 @@
 from models.user import DSP, DSPUpdate
 from models.ssp import Ad_Request
-import requests, validators
+import  validators
 MAX_KEYWORDS = 20
 
 

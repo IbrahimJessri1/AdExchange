@@ -13,7 +13,7 @@ async def request_ad(ad_request : Ad_Request):
     val_res = Validator.validate_ad_request(ad_request)
     if val_res:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail= val_res)
-    return await repo_ssp.request_ad(ad_request)
+    return  repo_ssp.request_ad(ad_request)
 
 
 @ssp_router.post('/request_interactive')
@@ -21,7 +21,7 @@ async def request_ad(ad_request : Ad_Request):
     val_res = Validator.validate_ad_request(ad_request)
     if val_res:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail= val_res)
-    return await repo_ssp.request_ad(ad_request, 1)
+    return  repo_ssp.request_ad(ad_request, 1)
 
 
 @ssp_router.get('/request')

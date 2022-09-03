@@ -1,5 +1,4 @@
 
-from venv import create
 from config.db import dsp_collection
 from . import generics as gen
 from fastapi import HTTPException, status
